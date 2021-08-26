@@ -13,8 +13,11 @@ function App() {
           <div className="tab">Favourites</div>
         </div>
         <div className="list">
-          {data.map((movie)=>{
-            return <MovieCard movie= {movie}/>
+          {data.map((movie, index)=>{
+            return <MovieCard 
+            movie= {movie}
+            key= {"movie"+index}
+            />
           })}
         </div>
       </div>
