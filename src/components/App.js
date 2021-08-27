@@ -17,7 +17,7 @@ class App extends React.Component {
 
   handleFavouriteClick=(movie)=>{
     //console.log(this);
-    const {favourites}= this.props.store.getState();
+    const {favourites}= this.props.store.getState().movies;
     //console.log(favourites);
     if(favourites.indexOf(movie)===-1)
     {
@@ -32,7 +32,7 @@ class App extends React.Component {
   }
 
   isMovieFavourite=(movie)=>{
-    if(this.props.store.getState().favourites.indexOf(movie)===-1)
+    if(this.props.store.getState().movies.favourites.indexOf(movie)===-1)
     {
       return false;
     }
@@ -42,19 +42,9 @@ class App extends React.Component {
     }
   }
 
-  isMovieFavourite=(movie)=>{
-    if(this.props.store.getState().favourites.indexOf(movie)===-1)
-    {
-      return false;
-    }
-    else
-    {
-      return true;
-    }
-  }
 
   showFav=(val)=>{
-    console.log("works");
+    console.log(val);
     this.props.store.dispatch(showFavourite(val));
     return;
   }
@@ -62,10 +52,11 @@ class App extends React.Component {
   render(){
     // const movies= this.props.store.getState().movies;
     // {console.log(movies)}
-    console.log("RENDERED");
-    const { movies, favourites, showFavourites }= this.props.store.getState();
+    const { movies }= this.props.store.getState();
+    const { list, favourites, showFavourites }= movies;
+    console.log(showFavourites,list);
     //console.log(this.props.store.getState().favourites);
-    const displayMovies= showFavourites ? favourites : movies;
+    const displayMovies= showFavourites ? favourites : list;
     return (
       <div className="App">
         <Navbar />
