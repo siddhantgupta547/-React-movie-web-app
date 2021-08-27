@@ -1,25 +1,39 @@
-import { ADD_MOVIES, ADD_FAVOURITE } from '../actions/index'
+import { ADD_MOVIES, ADD_FAVOURITE, REMOVE_FAVOURITE, SHOW_FAVOURITE } from '../actions/index'
 
-function movies(state= { movies: [], favourites: [] } , action){
+function movies(state= { movies: [], favourites: [], showFavourites: false } , action){
     
     switch (action.type) {
         case ADD_MOVIES:
             return {
-                movies: action.movies,
-                favourites:[]
+                ...state,
+                movies: action.movies
             }
-            break;
 
         case ADD_FAVOURITE:
             return{
                 ...state,
-                favourites: [action.movie]
+                favourites: [action.movie, ...state.favourites]
             }
-            break;
-    
+        
+        case REMOVE_FAVOURITE:
+            const filteredArray= [...state.favourites].filter((movie)=>{
+                if(movie.Title!==action.movie.Title){
+                    return movie;
+                }
+            })
+            return{
+                ...state,
+                favourites: filteredArray
+            }
+
+        case SHOW_FAVOURITE:
+            return{
+                ...state,
+                showFavourites: action.val
+            }
+
         default:
             return state;
-            break;
     }
     
     

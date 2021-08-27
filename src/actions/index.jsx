@@ -19,3 +19,23 @@ export function addFavourite(movie){
         movie
     }
 }
+
+//Action type "REMOVE_FAVOURITE"
+export const REMOVE_FAVOURITE= 'REMOVE_FAVOURITE'
+
+export function removeFavourite(movie){
+    return{
+        type: REMOVE_FAVOURITE,
+        movie
+    }
+}
+
+//Action type "REMOVE_FAVOURITE"
+export const SHOW_FAVOURITE= 'SHOW_FAVOURITE'
+
+export function showFavourite(val){
+    return{
+        type: SHOW_FAVOURITE,
+        val
+    }
+}

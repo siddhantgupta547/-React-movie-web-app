@@ -2,7 +2,7 @@ import React from 'react';
 import {data} from '../data/data';
 import Navbar from './Navbar';
 import MovieCard from './MovieCard';
-import { addMovies, addFavourite } from '../actions/index'
+import { addMovies, addFavourite, removeFavourite, showFavourite } from '../actions/index'
 
 class App extends React.Component {
   componentDidMount(){
@@ -12,12 +12,50 @@ class App extends React.Component {
     })
     
     this.props.store.dispatch(addMovies(data));
-    console.log(this.props.store.getState().movies);
+    //console.log(this.props.store.getState().movies);
   }
 
   handleFavouriteClick=(movie)=>{
     //console.log(this);
-    this.props.store.dispatch(addFavourite(movie));
+    const {favourites}= this.props.store.getState();
+    //console.log(favourites);
+    if(favourites.indexOf(movie)===-1)
+    {
+      this.props.store.dispatch(addFavourite(movie));
+      return;
+    }
+    else
+    {
+      this.props.store.dispatch(removeFavourite(movie));
+      return;
+    }
+  }
+
+  isMovieFavourite=(movie)=>{
+    if(this.props.store.getState().favourites.indexOf(movie)===-1)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+  isMovieFavourite=(movie)=>{
+    if(this.props.store.getState().favourites.indexOf(movie)===-1)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+  showFav=(val)=>{
+    console.log("works");
+    this.props.store.dispatch(showFavourite(val));
     return;
   }
 
@@ -25,23 +63,27 @@ class App extends React.Component {
     // const movies= this.props.store.getState().movies;
     // {console.log(movies)}
     console.log("RENDERED");
-    console.log(this.props.store.getState().favourites);
+    const { movies, favourites, showFavourites }= this.props.store.getState();
+    //console.log(this.props.store.getState().favourites);
+    const displayMovies= showFavourites ? favourites : movies;
     return (
       <div className="App">
         <Navbar />
         <div className="main">
           <div className="tabs">
-            <div className="tab">Movies</div>
-            <div className="tab">Favourites</div>
+            <div className="tab" onClick= {()=>this.showFav(false)}>Movies</div>
+            <div className="tab" onClick= {()=>this.showFav(true)}>Favourites</div>
           </div>
           <div className="list">
-            {this.props.store.getState().movies.map((movie, index)=>{
+            {displayMovies.map((movie, index)=>{
               return <MovieCard 
               movie= {movie}
               key= {"movie"+index}
               handleFavouriteClick= {this.handleFavouriteClick}
+              favourite= {this.isMovieFavourite(movie)}
               />
             })}
+            <div>{displayMovies.length===0 && <h4>No Movies to show</h4>}</div>
           </div>
         </div>
       </div>

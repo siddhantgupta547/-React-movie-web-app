@@ -5,7 +5,7 @@ class MovieCard extends React.Component{
 
     
     render(){
-        const { movie }= this.props;
+        const { movie, favourite }= this.props;
         return(
             <div className="movie-card">
                 <div className="left">
@@ -23,7 +23,7 @@ class MovieCard extends React.Component{
                             {movie.imdbRating}
                         </div>
                         <button className="favourite-btn" onClick={()=>{this.props.handleFavouriteClick(movie)}}>
-                            Favourite
+                            {favourite ? "Unfavourite" : "favourite"}
                         </button>
                     </div>
                 </div>
